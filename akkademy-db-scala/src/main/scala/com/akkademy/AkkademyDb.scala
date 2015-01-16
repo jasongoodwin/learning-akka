@@ -6,7 +6,7 @@ import com.akkademy.sapi.{GetRequest, SetRequest}
 import scala.collection.mutable.HashMap
 
 class AkkademyDb extends Actor {
-  val map = new HashMap[String, Object]
+  val map = new HashMap[String, String]
   val log = Logging(context.system, this)
 
   override def receive = {
