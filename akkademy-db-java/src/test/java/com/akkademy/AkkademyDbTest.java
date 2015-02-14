@@ -1,7 +1,6 @@
 package com.akkademy;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
