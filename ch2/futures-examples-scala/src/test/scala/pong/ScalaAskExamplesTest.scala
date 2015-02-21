@@ -25,4 +25,14 @@ class ScalaAskExamplesTest extends FunSpecLike with Matchers {
       }
     }
   }
+
+  describe("FutureExamples"){
+    import scala.concurrent.ExecutionContext.Implicits.global
+    it("should print to console"){
+      (pongActor ? "Ping").onSuccess({
+        case x: String => println("replied with: " + x)
+      })
+      Thread.sleep(100)
+    }
+  }
 }
