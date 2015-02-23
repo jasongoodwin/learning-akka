@@ -1,6 +1,7 @@
 package com.akkademy;
 
 import akka.actor.ActorRef;
+import akka.actor.ActorSelection;
 import akka.actor.ActorSystem;
 import com.akkademy.japi.GetRequest;
 import com.akkademy.japi.SetRequest;
@@ -12,10 +13,10 @@ import static scala.compat.java8.FutureConverters.toJava;
 
 public class JClient {
     private final ActorSystem system = ActorSystem.create("LocalSystem");
-    private final ActorRef remoteDb;
+    private final ActorSelection remoteDb;
 
     public JClient(String remoteAddress){
-        remoteDb = system.actorFor("akka.tcp://akkademy@" + remoteAddress + "/user/akkademy-db");
+        remoteDb = system.actorSelection("akka.tcp://akkademy@" + remoteAddress + "/user/akkademy-db");
     }
 
     public CompletionStage set(String key, Object value) {

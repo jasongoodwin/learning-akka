@@ -13,5 +13,4 @@ public class JClientIntegrationTest {
         Integer result = (Integer) ((CompletableFuture) client.get("123")).get();
         assert(result == 123);
     }
-
 }
