@@ -1,11 +1,12 @@
 package pong;
 
 import akka.actor.ActorRef;
-import akka.actor.ActorSelection;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
-import akka.testkit.TestActorRef;
+
 import static akka.pattern.Patterns.ask;
+
+import org.junit.Ignore;
 import org.junit.Test;
 import scala.concurrent.Future;
 
@@ -14,6 +15,7 @@ import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.Assert.assertEquals;
 import static scala.compat.java8.FutureConverters.*;
 
 public class PongActorTest {
@@ -26,7 +28,7 @@ public class PongActorTest {
         Future sFuture = ask(actorRef, "Ping", 1000);
         final CompletionStage<String> cs = toJava(sFuture);
         final CompletableFuture<String> jFuture = (CompletableFuture<String>) cs;
-        assert(jFuture.get(1000, TimeUnit.MILLISECONDS).equals("Pong"));
+        assertEquals("Pong", jFuture.get(1000, TimeUnit.MILLISECONDS));
     }
 
     @Test(expected = ExecutionException.class)
@@ -37,13 +39,87 @@ public class PongActorTest {
         jFuture.get(1000, TimeUnit.MILLISECONDS);
     }
 
+    //Future Examples
     @Test
-    public void printToConsole() throws Exception {
+    public void shouldPrintToConsole() throws Exception {
         askPong("Ping").thenAccept(x -> System.out.println("replied with: " + x));
+        Thread.sleep(100);
+        //no assertion - just prints to console
+    }
+
+    @Test
+    public void shouldTransform() throws Exception {
+        char result = (char) get(askPong("Ping").thenApply(x -> x.charAt(0)));
+        assertEquals('P', result);
+    }
+
+    /**
+     * There is a bug with the scala-java8-compat library 0.3.0 - thenCompose throws exception
+     *
+     * @throws Exception
+     */
+    @Test
+    @Ignore
+    public void shouldTransformAsync() throws Exception {
+        CompletionStage cs = askPong("Ping").
+                thenCompose(x -> askPong("Ping"));
+        assertEquals(get(cs), "Pong");
+    }
+
+    @Test
+    public void shouldEffectOnError() throws Exception {
+        askPong("cause error").handle((x, t) -> {
+            if (t != null) {
+                System.out.println("Error: " + t);
+            }
+            return null;
+        });
+    }
+
+    @Test
+    public void shouldRecoverOnError() throws Exception {
+        CompletionStage<String> cs = askPong("cause error").exceptionally(t -> {
+            return "default";
+        });
+
+        String result = (String) get(cs);
+    }
+
+    @Test
+    public void shouldRecoverOnErrorAsync() throws Exception {
+        CompletionStage<String> cf = askPong("cause error")
+                .handle((pong, ex) -> ex == null
+                                ? CompletableFuture.completedFuture(pong)
+                                : askPong("Ping")
+                ).thenCompose(x -> x);
+        assertEquals("Pong", get(cf));
+    }
+
+    @Test
+    public void shouldChainTogetherMultipleOperations() {
+        askPong("Ping").thenCompose(x -> askPong("Ping" + x)).handle((x, t) ->
+                t != null
+        ? "default"
+        : x);
+    }
+
+    @Test
+    public void shouldPrintErrorToConsole() throws Exception {
+        askPong("cause error").handle((x, t) -> {
+            if (t != null) {
+                System.out.println("Error: " + t);
+            }
+            return null;
+        });
         Thread.sleep(100);
     }
 
-    public CompletionStage<String> askPong(String message){
+    //Helpers
+    public Object get(CompletionStage cs) throws Exception {
+        return ((CompletableFuture<String>) cs).get(1000, TimeUnit.MILLISECONDS);
+    }
+
+    public CompletionStage<String> askPong(String message) {
         Future sFuture = ask(actorRef, message, 1000);
         final CompletionStage<String> cs = toJava(sFuture);
         return cs;
