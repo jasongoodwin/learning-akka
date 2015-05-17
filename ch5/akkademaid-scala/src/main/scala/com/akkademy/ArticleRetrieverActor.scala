@@ -1,4 +1,4 @@
-package com.akkademy.askdemo
+package com.akkademy
 
 import akka.actor.Actor
 

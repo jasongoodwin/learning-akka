@@ -1,8 +1,8 @@
-package com.akkademy.askdemo
+package com.akkademy
 
 import akka.actor.Actor
 
-class ParsingActor extends Actor{
+class ArticleParseActor extends Actor{
   override def receive: Receive = {
     case ParseArticle(htmlString) =>
       val body: String = ArticleParser(htmlString)
