@@ -17,7 +17,7 @@ public class ReadFilesWithActorsTest {
     ActorSystem system = ActorSystem.create();
     @Test
     public void shouldReadFilesWithActors() throws Exception {
-        ActorRef workerRouter = system.actorOf(Props.create(ArticleParseActor.class).withRouter(new RoundRobinPool(4)),
+        ActorRef workerRouter = system.actorOf(Props.create(ArticleParseActor.class).withRouter(new RoundRobinPool(8)),
                 "workerRouter");
 
         CompletableFuture future = new CompletableFuture();
