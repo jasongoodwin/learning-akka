@@ -1,6 +1,8 @@
 package com.akkademy;
 
-import akka.actor.*;
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import akka.actor.Props;
 import akka.routing.RoundRobinPool;
 import akkademy.ArticleParseActor;
 import akkademy.ParseArticle;
@@ -9,7 +11,7 @@ import org.junit.Test;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.IntStream;
 
-public class ReadFilesWithActorsTest {
+public class AssignActorsToDispatcherWithPoolTest {
     ActorSystem system = ActorSystem.create();
     @Test
     public void shouldReadFilesWithActors() throws Exception {
@@ -33,5 +35,4 @@ public class ReadFilesWithActorsTest {
         System.out.println("Took: " + elapsedTime);
 
     }
-
 }

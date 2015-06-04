@@ -11,7 +11,7 @@ libraryDependencies ++= Seq(
   "com.akkademy-db"   %% "akkademy-db-java"      % "0.0.1-SNAPSHOT",
   "com.typesafe.akka" % "akka-http-experimental_2.11" % "1.0-M4",
   "com.typesafe.akka" % "akka-http-core-experimental_2.11" % "1.0-M4",
-  "com.jason-goodwin" % "better-monads" % "0.1.0",
+  "com.jason-goodwin" % "better-monads" % "0.2.0",
   "com.syncthemall" % "boilerpipe" % "1.2.2",
   "junit"             % "junit"           % "4.12"  % "test",
   "com.novocode"      % "junit-interface" % "0.11"  % "test"

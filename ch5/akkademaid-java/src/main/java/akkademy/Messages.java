@@ -1,11 +1,11 @@
-package akkademy;
-
-public class Messages {
-    public static class GetArticleFromFile {
-        public final String url;
-        public GetArticleFromFile(String url) {
-            this.url = url;
-        }
-    }
-
-}
+//package akkademy;
+//
+//public class Messages {
+//    public static class GetArticleFromFile {
+//        public final String htmlBody;
+//        public GetArticleFromFile(String htmlBody) {
+//            this.htmlBody = htmlBody;
+//        }
+//    }
+//
+//}

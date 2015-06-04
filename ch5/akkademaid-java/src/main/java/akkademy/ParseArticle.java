@@ -1,8 +1,8 @@
 package akkademy;
 
 public class ParseArticle {
-    public final String url;
+    public final String htmlBody;
     public ParseArticle(String url) {
-        this.url = url;
+        this.htmlBody = url;
     }
 }
