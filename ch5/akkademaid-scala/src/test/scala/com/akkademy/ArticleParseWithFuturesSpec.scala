@@ -12,6 +12,6 @@ class ArticleParseWithFuturesSpec extends FlatSpec with Matchers {
       Future(ArticleParser.apply(TestHelper.file))
     })
 
-    TestHelper.profile(() => Await.ready(Future.sequence(futures), 20 seconds), "Futures")
+    TestHelper.profile(() => Await.ready(Future.sequence(futures), 30 seconds), "Futures")
   }
 }

@@ -19,6 +19,7 @@ class ArticleParseWithActorsSpec extends FlatSpec with Matchers {
   val future: Future[Int] = Future{
     1
   }(system.dispatcher)
+
   "ArticleParseActor" should "do work concurrently" in {
 
     val p = Promise[String]()
