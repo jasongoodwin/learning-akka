@@ -3,8 +3,8 @@ package com.akkademy;
 import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
 import akka.actor.ActorSystem;
-import com.akkademy.japi.GetRequest;
-import com.akkademy.japi.SetRequest;
+import com.akkademy.messages.GetRequest;
+import com.akkademy.messages.SetRequest;
 
 import java.util.concurrent.CompletionStage;
 

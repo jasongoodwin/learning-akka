@@ -3,7 +3,7 @@ package com.akkademy
 import akka.actor.ActorSystem
 import akka.pattern.ask
 import akka.util.Timeout
-import com.akkademy.sapi.{GetRequest, SetRequest}
+import com.akkademy.messages.{GetRequest, SetRequest}
 import scala.concurrent.duration._
 
 class SClient(remoteAddress: String){
