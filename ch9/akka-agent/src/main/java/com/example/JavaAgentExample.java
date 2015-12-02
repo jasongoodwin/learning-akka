@@ -33,6 +33,6 @@ public class JavaAgentExample {
 
         Thread.sleep(1000);
         System.out.println(account.get()); //still 5
-        
+
     }
 }
