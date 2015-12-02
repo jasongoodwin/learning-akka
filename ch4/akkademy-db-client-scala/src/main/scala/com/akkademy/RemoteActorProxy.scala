@@ -1,8 +1,7 @@
 package com.akkademy
 
-import akka.actor.{Stash, Actor}
-import akka.actor.Actor.Receive
-import com.akkademy.sapi.{SetRequest, GetRequest}
+import akka.actor.{Actor, Stash}
+import com.akkademy.messages.{GetRequest, SetRequest}
 
 class RemoteActorProxy extends Actor with Stash {
   override def receive = {

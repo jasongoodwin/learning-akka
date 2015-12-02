@@ -1,10 +1,11 @@
 package com.akkademy
 
-import akka.actor.{Props, ActorSystem, Status, Actor}
-import akka.cluster.{ClusterEvent, Cluster}
-import akka.cluster.ClusterEvent.{UnreachableMember, MemberEvent}
+import akka.actor._
+import akka.cluster.Cluster
+import akka.cluster.ClusterEvent.{MemberEvent, UnreachableMember}
 import akka.event.Logging
-import com.akkademy.sapi.{KeyNotFoundException, GetRequest, SetRequest}
+import com.akkademy.sapi.{GetRequest, KeyNotFoundException, SetRequest}
+
 import scala.collection.mutable.HashMap
 
 class AkkademyDb extends Actor {
@@ -32,6 +33,8 @@ class ClusterController extends Actor {
   val log = Logging(context.system, this)
   val cluster = Cluster(context.system)
 
+  var members = List(ActorRef)
+
   override def preStart() {
     cluster.subscribe(self, classOf[MemberEvent], classOf[UnreachableMember])
   }
@@ -50,4 +53,18 @@ class ClusterController extends Actor {
 object Main extends App {
   val system = ActorSystem("Akkademy")
   val clusterController = system.actorOf(Props[ClusterController], "clusterController")
+
 }
+
+import scala.concurrent.ExecutionContext.Implicits.global
+
+  val articleLlist = List("a")
+  object ArticleParser{
+    def apply(input: List[String]) = input
+  }
+
+val futures = articleList.map(artlice => {
+Future(ArticleParser.apply(article))
+})
+
+val articlesFuture: Future[List[String]] = Future.sequence(futures)

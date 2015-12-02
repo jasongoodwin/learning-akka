@@ -1,9 +1,9 @@
 package com.akkademy.clientactor
 
-import akka.actor.{ActorRef, FSM}
+import akka.actor.FSM
 import akka.io.Tcp.Connected
 import com.akkademy.clientactor.StateContainerTypes.RequestQueue
-import com.akkademy.sapi.{GetRequest, SetRequest}
+import com.akkademy.messages.GetRequest
 
 sealed trait State
 case object Disconnected extends State
@@ -29,24 +29,20 @@ class FSMClientActor(remoteAddress: String) extends FSM[State, RequestQueue]{
       else
         goto(ConnectedAndPending)
     case (x: GetRequest, container: RequestQueue) =>
-      container = container :: x :: Nil
-      stay()
+      stay using (container :+ x)
   }
 
   when (Connected) {
     case (x: GetRequest, container: RequestQueue) =>
-      container = container :: x :: Nil
-      goto(ConnectedAndPending)
+      goto(ConnectedAndPending) using(container :+ x)
   }
 
   when (ConnectedAndPending) {
     case (Flush, container) =>
       remoteDb ! container;
-      container = Nil
-      goto(Connected)
+      goto(Connected) using(Nil)
     case (x: GetRequest, container: RequestQueue) =>
-      container = container :: x :: Nil
-      stay()
+      stay using(container :+ x)
   }
 
   initialize()

@@ -2,7 +2,7 @@ package com.akkademy
 
 import akka.actor.{Props, ActorSystem, Status, Actor}
 import akka.event.Logging
-import com.akkademy.sapi.{KeyNotFoundException, GetRequest, SetRequest}
+import com.akkademy.messages.{KeyNotFoundException, GetRequest, SetRequest}
 import scala.collection.mutable.HashMap
 
 class AkkademyDb extends Actor {

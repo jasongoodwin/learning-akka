@@ -7,8 +7,8 @@ import akka.actor.ActorSystem;
 import akka.io.Tcp;
 import akka.japi.pf.FSMStateFunctionBuilder;
 import akka.japi.pf.ReceiveBuilder;
-import com.akkademy.japi.GetRequest;
-import com.akkademy.japi.SetRequest;
+import com.akkademy.messages.GetRequest;
+import com.akkademy.messages.SetRequest;
 import static com.akkademy.clientactor.State.*;
 import java.util.LinkedList;
 

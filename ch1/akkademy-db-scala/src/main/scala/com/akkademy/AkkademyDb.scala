@@ -2,7 +2,7 @@ package com.akkademy
 
 import akka.actor.Actor
 import akka.event.Logging
-import com.akkademy.sapi.SetRequest
+import com.akkademy.messages.SetRequest
 import scala.collection.mutable.HashMap
 
 class AkkademyDb extends Actor {

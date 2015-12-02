@@ -4,7 +4,7 @@ import akka.actor.AbstractActor;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import akka.japi.pf.ReceiveBuilder;
-import com.akkademy.japi.SetRequest;
+import com.akkademy.messages.SetRequest;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -5,10 +5,9 @@ import akka.actor.Status;
 import akka.event.Logging;
 import akka.event.LoggingAdapter;
 import akka.japi.pf.ReceiveBuilder;
-import com.akkademy.japi.GetRequest;
-import com.akkademy.japi.KeyNotFoundException;
-import com.akkademy.japi.SetRequest;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import com.akkademy.messages.GetRequest;
+import com.akkademy.messages.KeyNotFoundException;
+import com.akkademy.messages.SetRequest;
 
 import java.util.HashMap;
 import java.util.Map;

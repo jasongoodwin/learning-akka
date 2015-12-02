@@ -25,8 +25,39 @@ public class AkkademyDb extends AbstractActor {
                             sender().tell(new Status.Success(message.key), self());
                         }).
                         match(GetRequest.class, message -> {
-                            log.info("Received Get request: {}", message);
-                            Object value = map.get(message.key);
+//                            log.info("Received Get request: {}", message);
+                            Object value = map.get(message.key).toString() +
+                            map.get(message.key) +
+                            map.get(message.key) +
+                            map.get(message.key) +
+                            map.get(message.key) +
+                            map.get(message.key).toString() + "HELLO";
+                            value.toString().contains("HELO");
+                            value.toString().contains("HELO");
+                            value.toString().contains("HLLO");
+                            value.toString().contains("HELLO");
+                            value.toString().contains("HELO");
+                            value.toString().contains("HELO");
+                            value.toString().contains("HELO");
+                            value.toString().contains("HLLO");
+                            value.toString().contains("HELL");
+                            value.toString().endsWith("HELL");
+                            value.toString().endsWith("HELL");
+                            value.toString().endsWith("HLL");
+                            value.toString().endsWith("ELL");
+                            value.toString().endsWith("HEL");
+                            value.toString().endsWith("HE");
+                            value.toString().endsWith("HE");
+                            value.toString().endsWith("HEzzz");
+                            value.toString().endsWith("HEzzzz");
+
+                            value.hashCode();
+                            (value + "hello").hashCode();
+                            (value + "he5l8lo").hashCode();
+                            (value + "hel5lo").hashCode();
+                            (value + "h5ello").hashCode();
+                            (value + "hel7lo").hashCode();
+
                             Object response = (value != null)
                                     ? value
                                     : new Status.Failure(new KeyNotFoundException(message.key));
