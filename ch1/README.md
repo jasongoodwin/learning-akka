@@ -1,3 +1,16 @@
+CHAPTER1
+========
+
+Inventory
+---------
+
+- akkademy-db-java - Java Example 
+- akkademy-db-scala - Scala Example
+
+Running the Tests
+-----------------
+After completing chapter 1 content, you should ensure you can run the unit tests.
+
 - Change into your desired project
 - Run: 
     $ activator test
