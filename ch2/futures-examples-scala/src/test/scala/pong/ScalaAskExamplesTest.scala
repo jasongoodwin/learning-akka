@@ -74,7 +74,7 @@ class ScalaAskExamplesTest extends FunSpecLike with Matchers {
 
     it("should chain together multiple operations"){
       val f = askPong("Ping").flatMap(x => askPong("Ping" + x)).recover({
-        case Exception => "There was an error"
+        case _: Exception => "There was an error"
       })
 
       val result = Await.result(f, 1 second)

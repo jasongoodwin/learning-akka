@@ -3,7 +3,6 @@ CHAPTER2
 
 Inventory
 ---------
-- actor-anatomy			
 - futures-examples-java
 - futures-examples-scala
 - akkademy-db-client-java		
