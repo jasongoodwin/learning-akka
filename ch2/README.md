@@ -1,10 +1,11 @@
 CHAPTER2
 ========
+This chapter demonstrates using akka to talk over the network to remote services. It extends on the simple examples from chapter 1, and builds a second component to talk to the code we had previously built over the network.
 
 Inventory
 ---------
-- futures-examples-java - demonstrate working with futures
-- futures-examples-scala - demonstrate working with futures
+- futures-examples-java - demonstrate working with futures (based on ch1 example)
+- futures-examples-scala - demonstrate working with futures (based on ch1 example)
 - akkademy-db-client-java - client that talks to akkademy-db-java		
 - akkademy-db-client-scala - client that talks akkademy-db-scala
 - akkademy-db-java - simple remote key value store
@@ -12,6 +13,7 @@ Inventory
 
 Preparation
 -----------
+
 Before attempting to work with the akkademy-db-client-* projects, you'll need to publish the akkademy-db-java and/or akkademy-db-server projects. Change into their root folder and then execute the "publish-local" target:
 
     cd akkademy-db-java
@@ -33,6 +35,8 @@ The appropriate database must be running for the akkademy-db-client-* tests to r
 
 Running the Tests
 -----------------
+
+Most of the actual example logic is demonstated in unit tests rather than in a main. This is to make it faster to work with the example code as you can just run test suites as you make changes.
 
 ### futures-examples-java 
 The unit test for this project demonstrates numerous ways of working with futures. It's a good project to play around in!
