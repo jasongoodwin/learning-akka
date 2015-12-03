@@ -1,11 +1,12 @@
 package pong
 
-import akka.actor.{Props, ActorSystem}
+import akka.actor.{ActorSystem, Props}
 import akka.pattern.ask
 import akka.util.Timeout
 import org.scalatest.{FunSpecLike, Matchers}
-import scala.concurrent.{Promise, Future, Await}
+
 import scala.concurrent.duration._
+import scala.concurrent.{Promise, Await, Future}
 
 class ScalaAskExamplesTest extends FunSpecLike with Matchers {
   val system = ActorSystem()
@@ -41,16 +42,40 @@ class ScalaAskExamplesTest extends FunSpecLike with Matchers {
       c should equal('P')
     }
 
+    /**
+     * Sends "Ping". Gets back "Pong"
+     * Sends "Ping" again when it gets "Pong"
+     */
     it("should transform async"){
-      val f: Future[String] = askPong("Ping").flatMap(x => askPong(x))
+      val f: Future[String] = askPong("Ping").flatMap(x => {
+        assert(x == "Pong")
+        askPong("Ping")
+      })
       val c = Await.result(f, 1 second)
       c should equal("Pong")
     }
 
-    //doesn't test anything - demonstrates an effect
+    //doesn't actually test anything - demonstrates an effect. next test shows assertion.
+
     it("should effect on failure"){
       askPong("causeError").onFailure{
         case e: Exception => println("Got exception")
+      }
+    }
+
+    /**
+     * similar example to previous test, but w/ assertion
+     */
+
+    it("should effect on failure (with assertion)"){
+      val res = Promise()
+      askPong("causeError").onFailure{
+        case e: Exception =>
+          res.failure(new Exception("failed!"))
+      }
+
+      intercept[Exception]{
+        Await.result(res.future, 1 second)
       }
     }
 

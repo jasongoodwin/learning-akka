@@ -54,12 +54,12 @@ public class PongActorTest {
     }
 
     /**
-     * There is a bug with the scala-java8-compat library 0.3.0 - thenCompose throws exception
+     * There is was a bug with the scala-java8-compat library 0.3.0 - thenCompose throws exception
+     * https://github.com/scala/scala-java8-compat/issues/26
      *
-     * @throws Exception
+     * I confirmed fixed in 0.6.0-SNAPSHOT (10 months later). Just in time for publishing!
      */
     @Test
-    @Ignore
     public void shouldTransformAsync() throws Exception {
         CompletionStage cs = askPong("Ping").
                 thenCompose(x -> askPong("Ping"));

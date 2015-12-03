@@ -39,6 +39,19 @@ Running the Tests
 Most of the actual example logic is demonstated in unit tests rather than in a main. This is to make it faster to work with the example code as you can just run test suites as you make changes.
 
 ### futures-examples-java 
+
+#### FIXME/Preparation Workaround 
+NOTE: There is a bug in the scala-java8-compat lib that is fixed in 0.6.0.
+0.6.0 is not released at the moment so you'd need to change the build.sbt to use 0.6.0-SNAPSHOT and then checkout the library 
+
+    git clone https://github.com/scala/scala-java8-compat.git
+
+and run 
+
+    activator publish-local
+
+When the library is published, this will not need to be done and the code will simply work at which point in time this comment should be removed!
+
 The unit test for this project demonstrates numerous ways of working with futures. It's a good project to play around in!
 
 To run the tests, execute the test target:
