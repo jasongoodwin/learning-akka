@@ -17,6 +17,8 @@ class TellDemoArticleParser(cacheActorPath: String,
   val httpClientActor = context.actorSelection(cacheActorPath)
   val articleParserActor = context.actorSelection(cacheActorPath)
 
+  implicit val ec = context.dispatcher
+
   override def receive: Receive = {
     case msg @ ParseArticle(uri) =>
 
