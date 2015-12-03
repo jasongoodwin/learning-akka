@@ -30,7 +30,7 @@ public class ReadFilesWithActorsTest {
         long start = System.currentTimeMillis();
         future.get();
         long elapsedTime = System.currentTimeMillis() - start;
-        System.out.println("Took: " + elapsedTime);
+        System.out.println("ReadFilesWithActorsTest Took: " + elapsedTime);
 
     }
 

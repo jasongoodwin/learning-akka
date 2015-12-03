@@ -21,7 +21,7 @@ import java.util.stream.IntStream;
 
 public class ReadFilesWithFuturesTest {
     @Test
-    public void shouldReadFilesWithActors() throws Exception {
+    public void shouldReadFilesWithFutures() throws Exception {
         List<Integer> list = IntStream.range(0, 2000).boxed().collect(Collectors.toList());
         List futures = (List) list
                 .stream()
@@ -31,7 +31,7 @@ public class ReadFilesWithFuturesTest {
         long start = System.currentTimeMillis();
         com.jasongoodwin.monads.Futures.sequence(futures).get();
         long elapsedTime = System.currentTimeMillis() - start;
-        System.out.println("Took: " + elapsedTime);
+        System.out.println("ReadFilesWithFuturesTest Took: " + elapsedTime);
     }
 
     private static <T> CompletableFuture<List<T>> sequence(List<CompletableFuture<T>> futures) {

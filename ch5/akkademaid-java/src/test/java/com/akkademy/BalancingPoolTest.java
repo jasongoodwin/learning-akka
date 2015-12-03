@@ -15,7 +15,7 @@ import java.util.stream.IntStream;
 public class BalancingPoolTest {
     ActorSystem system = ActorSystem.create();
     @Test
-    public void shouldReadFilesWithActors() throws Exception {
+    public void shouldReadFilesWithBalancingPool() throws Exception {
         ActorRef workerRouter = system.actorOf(new BalancingPool(8).props(Props.create(ArticleParseActor.class)),
                 "balancing-pool-router");
 
@@ -32,7 +32,7 @@ public class BalancingPoolTest {
         long start = System.currentTimeMillis();
         future.get();
         long elapsedTime = System.currentTimeMillis() - start;
-        System.out.println("Took: " + elapsedTime);
+        System.out.println("BalancingPoolTest Took: " + elapsedTime);
 
     }
 }

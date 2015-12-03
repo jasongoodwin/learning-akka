@@ -18,7 +18,7 @@ import java.util.stream.IntStream;
 public class AssignActorsToDispatcherTest {
     ActorSystem system = ActorSystem.create();
     @Test
-    public void shouldReadFilesWithActors() throws Exception {
+    public void shouldReadFilesWithActorsInAnotherDispatcher() throws Exception {
 
         List<ActorRef> routees = Arrays.asList(1,2,3,4,5,6,7,8).stream().map(x ->
                 system.actorOf(Props.create(ArticleParseActor.class).
@@ -45,7 +45,7 @@ public class AssignActorsToDispatcherTest {
         long start = System.currentTimeMillis();
         future.get();
         long elapsedTime = System.currentTimeMillis() - start;
-        System.out.println("Took: " + elapsedTime);
+        System.out.println("ActorsAssignedToDispatcherTest Took: " + elapsedTime);
 
     }
 }
