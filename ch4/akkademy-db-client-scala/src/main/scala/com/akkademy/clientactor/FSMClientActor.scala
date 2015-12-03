@@ -18,30 +18,30 @@ object StateContainerTypes {
 }
 
 class FSMClientActor(remoteAddress: String) extends FSM[State, RequestQueue]{
-  startWith(Disconnected, null)
-
   private val remoteDb = context.system.actorSelection(s"akka.tcp://akkademy@$remoteAddress/user/akkademy-db")
 
+  startWith(Disconnected, null)
+
   when(Disconnected){
-    case (_: Connected, container: RequestQueue) =>
+    case Event(_: Connected, container: RequestQueue) =>
       if (container.headOption.isEmpty)
         goto(Connected)
       else
         goto(ConnectedAndPending)
-    case (x: GetRequest, container: RequestQueue) =>
+    case Event(x: GetRequest, container: RequestQueue) =>
       stay using (container :+ x)
   }
 
   when (Connected) {
-    case (x: GetRequest, container: RequestQueue) =>
+    case Event(x: GetRequest, container: RequestQueue) =>
       goto(ConnectedAndPending) using(container :+ x)
   }
 
   when (ConnectedAndPending) {
-    case (Flush, container) =>
+    case Event(Flush, container) =>
       remoteDb ! container;
-      goto(Connected) using(Nil)
-    case (x: GetRequest, container: RequestQueue) =>
+      goto(Connected) using Nil
+    case Event(x: GetRequest, container: RequestQueue) =>
       stay using(container :+ x)
   }
 
