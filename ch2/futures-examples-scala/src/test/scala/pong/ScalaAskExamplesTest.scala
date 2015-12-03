@@ -111,9 +111,10 @@ class ScalaAskExamplesTest extends FunSpecLike with Matchers {
       val f2 = Future{5}
 
       val futureAddition =
-        for(
-          res1 <- f1;
-          res2 <- f2) yield res1 + res2
+        for{
+          res1 <- f1
+          res2 <- f2
+        } yield res1 + res2
       val additionResult = Await.result(futureAddition, 1 second)
       assert(additionResult == 9)
     }
