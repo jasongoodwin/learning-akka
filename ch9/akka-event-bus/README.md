@@ -1,4 +1,4 @@
-activator-akka-scala-seed
+akka-event-bus demo
 =========================
 
-A minimal seed template for an Akka with Scala build 
+Akka event bus examples for java and scala

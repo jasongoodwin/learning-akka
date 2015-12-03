@@ -1,4 +1,4 @@
-activator-akka-scala-seed
+akka-agent demo
 =========================
 
-A minimal seed template for an Akka with Scala build 
+Simple scala and java akka agent demonstration

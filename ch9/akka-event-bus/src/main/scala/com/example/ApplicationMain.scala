@@ -11,7 +11,6 @@ object ApplicationMain extends App {
   jLookupBus.publish(new EventBusMessage("time", System.currentTimeMillis().toString))
   jLookupBus.publish(new EventBusMessage("java-greetings", "java event bus greeting"))
 
-
   val sLookupBus = new ScalaLookupClassifier
   sLookupBus.subscribe(greetingActor, "scala-greetings")
   sLookupBus.publish(new EventBusMessage("time", System.currentTimeMillis().toString))
