@@ -1,5 +1,7 @@
-CHAPTER1
+CHAPTER5
 ========
+
+Chapter covers different router and dispatcher usage for taking better advantage of hardware. Also covers how to use a separate dispatcher for blocking work to keep actors lively.
 
 Inventory
 ---------

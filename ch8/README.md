@@ -1,9 +1,10 @@
-CHAPTER1
+CHAPTER8
 ========
 
 Inventory
 ---------
-
+- java-akka-chat - Simple domain modelling and BDD Sample for Java
+- scala-akka-chat - Simple domain modelling and BDD Sample for Scala
 
 Running the Tests
 -----------------

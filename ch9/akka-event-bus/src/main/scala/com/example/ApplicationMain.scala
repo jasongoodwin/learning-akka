@@ -6,10 +6,16 @@ object ApplicationMain extends App {
   val system = ActorSystem("MyActorSystem")
   val greetingActor = system.actorOf(Props(new GreetingActor))
 
-  val lookupBus = new JavaLookupClassifier
-  lookupBus.subscribe(greetingActor, "greetings")
-  lookupBus.publish(new EventBusMessage("time", System.currentTimeMillis().toString))
-  lookupBus.publish(new EventBusMessage("greetings", "hello"))
+  val jLookupBus = new JavaLookupClassifier
+  jLookupBus.subscribe(greetingActor, "java-greetings")
+  jLookupBus.publish(new EventBusMessage("time", System.currentTimeMillis().toString))
+  jLookupBus.publish(new EventBusMessage("java-greetings", "java event bus greeting"))
+
+
+  val sLookupBus = new ScalaLookupClassifier
+  sLookupBus.subscribe(greetingActor, "scala-greetings")
+  sLookupBus.publish(new EventBusMessage("time", System.currentTimeMillis().toString))
+  sLookupBus.publish(new EventBusMessage("scala-greetings", "scala event bus greeting"))
 }
 
 class GreetingActor extends Actor {
