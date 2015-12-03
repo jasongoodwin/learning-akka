@@ -44,7 +44,7 @@ public class PongActorTest {
     public void shouldPrintToConsole() throws Exception {
         askPong("Ping").thenAccept(x -> System.out.println("replied with: " + x));
         Thread.sleep(100);
-        //no assertion - just prints to console
+        //no assertion - just prints to console. Try to complete a CompletableFuture instead.
     }
 
     @Test

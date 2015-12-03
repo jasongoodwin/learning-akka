@@ -59,6 +59,13 @@ To run the tests, execute the test target:
     cd futures-examples-java
     activator test
 
+#### Expected Output
+
+    replied with: Pong
+    Error: java.lang.Exception: unknown message
+    Error: java.lang.Exception: unknown message
+    [info] Passed: Total 10, Failed 0, Errors 0, Passed 10
+
 ### futures-examples-scala 
 
 The unit test for this project demonstrates numerous ways of working with future
@@ -68,6 +75,33 @@ To run the tests, execute the test target:
 
     cd futures-examples-java
     activator test
+
+#### Expected Output
+
+	replied with: Pong
+	Got exception
+	[info] ScalaAskExamplesTest:
+	[info] Pong actor
+	[info] - should respond with Pong
+	[info] - should fail on unknown message
+	[info] FutureExamples
+	[info] - should print to console
+	[info] - should transform
+	[info] - should transform async
+	[info] - should effect on failure
+	[info] - should effect on failure (with assertion)
+	[info] - should recover on failure
+	[info] - should recover on failure async
+	[info] - should chain together multiple operations
+	[info] - should be handled with for comprehension
+	[info] - should handle a list of futures
+	[info] ScalaTest
+	[info] Run completed in 1 second, 189 milliseconds.
+	[info] Total number of tests run: 12
+	[info] Suites: completed 1, aborted 0
+	[info] Tests: succeeded 12, failed 0, canceled 0, ignored 0, pending 0
+	[info] All tests passed.
+	[info] Passed: Total 12, Failed 0, Errors 0, Passed 12
 
 ### akkademy-db-client-java 
 The tests in this project will attempt to talk over the network to the running instance of akkademy db (see preparation for instructions on starting the db.) 
