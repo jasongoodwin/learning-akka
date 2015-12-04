@@ -7,8 +7,6 @@ import akka.actor.{Actor, ActorRef, Props}
 import akka.util.Timeout
 import com.akkademy.messages.{GetRequest, SetRequest}
 
-import scala.concurrent.duration._
-
 class TellDemoArticleParser(cacheActorPath: String,
                             httpClientActorPath: String,
                             acticleParserActorPath: String,
@@ -37,7 +35,7 @@ class TellDemoArticleParser(cacheActorPath: String,
       cacheActor.tell(GetRequest(uri), extraActor)
       httpClientActor.tell("test", extraActor)
 
-      context.system.scheduler.scheduleOnce(2 seconds, extraActor, "timeout")
+      context.system.scheduler.scheduleOnce(timeout.duration, extraActor, "timeout")
   }
 
   /**
@@ -53,7 +51,7 @@ class TellDemoArticleParser(cacheActorPath: String,
           senderRef ! Failure(new TimeoutException("timeout!"))
           context.stop(self)
 
-        case HttpResponse(body) => //If we get http response first, then parse it and cache it.
+        case HttpResponse(body) => //If we get the http response first, we pass it to be parsed.
           articleParserActor ! ParseHtmlArticle(uri, body)
 
         case body: String => //If we get the cache response first, then we handle it and shut down.
@@ -61,15 +59,13 @@ class TellDemoArticleParser(cacheActorPath: String,
           senderRef ! body
           context.stop(self)
 
-        case ArticleBody(uri, body) =>
-          //If we get the parsed article back, then we're done.
-          //This could come from either the cache or the endpoint.
+        case ArticleBody(uri, body) => //If we get the parsed article back, then we've just parsed it
           cacheActor ! SetRequest(uri, body) //Cache it as we just parsed it
           senderRef ! body
           context.stop(self)
 
-        case t => //We can get a cache miss - this can be improved by using a specific msg for cache miss.
-          println("ignoring msg: " + t)
+        case t => //We can get a cache miss
+          println("ignoring msg: " + t.getClass)
       }
     }))
   }

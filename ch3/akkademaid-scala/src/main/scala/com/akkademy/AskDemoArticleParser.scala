@@ -22,7 +22,7 @@ class AskDemoArticleParser(cacheActorPath: String,
    * Note there are 3 asks so this potentially creates 6 extra objects:
    * - 3 Promises
    * - 3 Extra actors
-   * @return
+   * It's a bit simpler than the tell example.
    */
   override def receive: Receive = {
     case ParseArticle(uri) =>
@@ -46,6 +46,7 @@ class AskDemoArticleParser(cacheActorPath: String,
       // (see Pipe pattern for improved implementation)
       result onComplete {
         case scala.util.Success(x: String) =>
+          println("cached result!")
           senderRef ! x //cached result
         case scala.util.Success(x: ArticleBody) =>
           cacheActor ! SetRequest(uri, x.body)
