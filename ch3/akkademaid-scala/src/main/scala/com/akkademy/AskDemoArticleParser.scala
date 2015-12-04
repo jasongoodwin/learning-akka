@@ -5,6 +5,8 @@ import akka.pattern.ask
 import akka.util.Timeout
 import com.akkademy.messages.{SetRequest, GetRequest}
 
+import scala.concurrent.Future
+
 class AskDemoArticleParser(cacheActorPath: String,
                            httpClientActorPath: String,
                            acticleParserActorPath: String,
@@ -15,6 +17,13 @@ class AskDemoArticleParser(cacheActorPath: String,
   val articleParserActor = context.actorSelection(acticleParserActorPath)
   import scala.concurrent.ExecutionContext.Implicits.global
 
+
+  /**
+   * Note there are 3 asks so this potentially creates 6 extra objects:
+   * - 3 Promises
+   * - 3 Extra actors
+   * @return
+   */
   override def receive: Receive = {
     case ParseArticle(uri) =>
       val senderRef = sender() //sender ref needed for use in callback (see Pipe pattern for better solution)
@@ -25,16 +34,21 @@ class AskDemoArticleParser(cacheActorPath: String,
         case _: Exception =>
           val fRawResult = httpClientActor ? uri
 
-          fRawResult flatMap {rawArticle =>
-            articleParserActor ? rawArticle
+          fRawResult flatMap {
+            case HttpResponse(rawArticle) =>
+              articleParserActor ? ParseHtmlArticle(uri, rawArticle)
+            case x =>
+              Future.failed(new Exception("unknown response"))
           }
       }
 
       // take the result and pipe it back to the actor
       // (see Pipe pattern for improved implementation)
-      result.mapTo[String] onComplete {
-        case scala.util.Success(x) =>
-          cacheActor ! SetRequest(uri, x)
+      result onComplete {
+        case scala.util.Success(x: String) =>
+          senderRef ! x //cached result
+        case scala.util.Success(x: ArticleBody) =>
+          cacheActor ! SetRequest(uri, x.body)
           senderRef ! x
         case scala.util.Failure(t) =>
           senderRef ! akka.actor.Status.Failure(t)

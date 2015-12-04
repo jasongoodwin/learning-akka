@@ -4,9 +4,9 @@ import akka.actor.Actor
 
 class ParsingActor extends Actor{
   override def receive: Receive = {
-    case htmlString: String =>
-      sender() ! de.l3s.boilerpipe.extractors.ArticleExtractor.INSTANCE.getText(htmlString)
+    case ParseHtmlArticle(key, html) =>
+      sender() ! ArticleBody(key, de.l3s.boilerpipe.extractors.ArticleExtractor.INSTANCE.getText(html))
     case x =>
-      println("unknown message " + x)
+      println("unknown message " + x.getClass)
   }
 }

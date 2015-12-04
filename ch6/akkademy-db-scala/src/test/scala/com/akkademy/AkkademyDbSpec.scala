@@ -3,7 +3,7 @@ package com.akkademy
 import akka.actor.ActorSystem
 import akka.testkit.TestActorRef
 import akka.util.Timeout
-import com.akkademy.sapi.SetRequest
+import com.akkademy.messages.SetRequest
 import org.scalatest.{FunSpecLike, Matchers}
 
 import scala.concurrent.duration._

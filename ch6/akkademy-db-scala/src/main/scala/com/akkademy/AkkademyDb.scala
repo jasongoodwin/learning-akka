@@ -4,7 +4,7 @@ import akka.actor._
 import akka.cluster.Cluster
 import akka.cluster.ClusterEvent.{MemberEvent, UnreachableMember}
 import akka.event.Logging
-import com.akkademy.sapi.{GetRequest, KeyNotFoundException, SetRequest}
+import com.akkademy.messages.{GetRequest, KeyNotFoundException, SetRequest}
 
 import scala.collection.mutable.HashMap
 
@@ -55,16 +55,3 @@ object Main extends App {
   val clusterController = system.actorOf(Props[ClusterController], "clusterController")
 
 }
-
-import scala.concurrent.ExecutionContext.Implicits.global
-
-  val articleLlist = List("a")
-  object ArticleParser{
-    def apply(input: List[String]) = input
-  }
-
-val futures = articleList.map(artlice => {
-Future(ArticleParser.apply(article))
-})
-
-val articlesFuture: Future[List[String]] = Future.sequence(futures)
