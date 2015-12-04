@@ -11,6 +11,13 @@ Inventory
 - akkademaid-java		
 - akkademaid-scala
 
+Prerequisites
+-------------
+Note for the java project you'll need
+    "org.scala-lang.modules" %% "scala-java8-compat" % "0.6.0"
+At the time of writing it is not released - the dependency points to the SNAPSHOT which is not in maven central. Should be fixed once this is released (hopefully before publishing)
+
+
 Running the Tests
 -----------------
 change into the folder of your choice
