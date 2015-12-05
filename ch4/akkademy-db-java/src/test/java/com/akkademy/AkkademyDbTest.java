@@ -5,7 +5,9 @@ import static org.junit.Assert.assertEquals;
 import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
+import akka.actor.Status;
 import akka.testkit.TestActorRef;
+import akka.testkit.TestProbe;
 import com.akkademy.messages.SetRequest;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
@@ -17,7 +19,7 @@ import java.util.List;
 public class AkkademyDbTest {
 
     ActorSystem system = ActorSystem.create("system", ConfigFactory.empty()); //Ignore the config for remoting
-
+    TestProbe testProbe = TestProbe.apply(system);
     @Test
     public void itShouldPlaceKeyValueFromSetMessageIntoMap() {
         TestActorRef<AkkademyDb> actorRef = TestActorRef.create(system, Props.create(AkkademyDb.class));
@@ -33,11 +35,16 @@ public class AkkademyDbTest {
         TestActorRef<AkkademyDb> actorRef = TestActorRef.create(system, Props.create(AkkademyDb.class));
         AkkademyDb akkademyDb = actorRef.underlyingActor();
 
-        List list = Arrays.asList(new SetRequest("key2", "value2"), new SetRequest("key3", "value3"));
+        List list = Arrays.asList(
+                new SetRequest("key2", "value2", testProbe.ref()),
+                new SetRequest("key3", "value3", testProbe.ref()));
         actorRef.tell(list, ActorRef.noSender());
 
         assertEquals(akkademyDb.map.get("key2"), "value2");
         assertEquals(akkademyDb.map.get("key3"), "value3");
+
+        testProbe.expectMsg(new Status.Success("key2"));
+        testProbe.expectMsg(new Status.Success("key3"));
     }
 
 }

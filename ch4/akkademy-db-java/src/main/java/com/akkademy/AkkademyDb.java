@@ -30,10 +30,9 @@ public class AkkademyDb extends AbstractActor {
                                         if (x instanceof SetRequest) {
                                             SetRequest setRequest = (SetRequest) x;
                                             map.put(setRequest.key, setRequest.value);
+                                            setRequest.sender.tell(new Status.Success(setRequest.key), self());
                                         }
-
                                     });
-                                    sender().tell(new Status.Success(""), self());
                                 }
                         ).
                         match(SetRequest.class, message -> {

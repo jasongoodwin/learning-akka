@@ -13,11 +13,11 @@ class AkkademyDb extends Actor {
     case x: messages.Connected =>
       sender() ! x
     case x: List[_] =>
-      x.foreach{ case SetRequest(key, value) =>
+      x.foreach{ case SetRequest(key, value, senderRef) =>
           map.put(key, value)
+          senderRef ! Status.Success
       }
-      sender() ! Status.Success
-    case SetRequest(key, value) =>
+    case SetRequest(key, value, _) =>
       log.info("received SetRequest - key: {} value: {}", key, value)
       map.put(key, value)
       sender() ! Status.Success

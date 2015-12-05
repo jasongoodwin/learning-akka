@@ -7,7 +7,7 @@ class RemoteActorProxy extends Actor with Stash {
   override def receive = {
     case GetRequest(key) =>
       stash()
-    case x @ SetRequest(key, value) =>
+    case x @ SetRequest(key, value, _) =>
 
 
   }
