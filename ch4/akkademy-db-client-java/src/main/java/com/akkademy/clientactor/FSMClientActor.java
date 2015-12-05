@@ -18,6 +18,11 @@ enum State{
 class EventQueue extends LinkedList<Request> {}
 class FlushMsg{}
 
+/**
+ * To revert to disconnected, we could send occassional heartbeat pings
+ * and revert by restarting the actor (throwing an exception)
+ */
+
 public class FSMClientActor extends AbstractFSM<State, EventQueue>{
 
     private ActorSelection remoteDb;

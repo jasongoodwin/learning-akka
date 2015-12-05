@@ -19,19 +19,21 @@ import java.util.List;
 public class AkkademyDbTest {
 
     ActorSystem system = ActorSystem.create("system", ConfigFactory.empty()); //Ignore the config for remoting
-    TestProbe testProbe = TestProbe.apply(system);
+
     @Test
     public void itShouldPlaceKeyValueFromSetMessageIntoMap() {
+        TestProbe testProbe = TestProbe.apply(system);
         TestActorRef<AkkademyDb> actorRef = TestActorRef.create(system, Props.create(AkkademyDb.class));
         AkkademyDb akkademyDb = actorRef.underlyingActor();
 
-        actorRef.tell(new SetRequest("key", "value"), ActorRef.noSender());
+        actorRef.tell(new SetRequest("key", "value", testProbe.ref()), ActorRef.noSender());
 
         assertEquals(akkademyDb.map.get("key"), "value");
     }
 
     @Test
     public void itShouldPlaceKeyValuesFromListOfSetMessageIntoMap() {
+        TestProbe testProbe = TestProbe.apply(system);
         TestActorRef<AkkademyDb> actorRef = TestActorRef.create(system, Props.create(AkkademyDb.class));
         AkkademyDb akkademyDb = actorRef.underlyingActor();
 

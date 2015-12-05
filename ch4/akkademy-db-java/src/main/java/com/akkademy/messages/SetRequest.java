@@ -20,4 +20,13 @@ public class SetRequest implements Serializable, Request {
         this.value = value;
         this.sender = ActorRef.noSender();
     }
+
+    @Override
+    public String toString() {
+        return "SetRequest{" +
+                "key='" + key + '\'' +
+                ", value=" + value +
+                ", sender=" + sender +
+                '}';
+    }
 }

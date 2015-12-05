@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class AkkademyDb extends AbstractActor {
     protected final LoggingAdapter log = Logging.getLogger(context().system(), this);
-    protected final Map<String, Object> map = new HashMap<String, Object>();
+    public final Map<String, Object> map = new HashMap<String, Object>();
 
     private AkkademyDb() {
         receive(ReceiveBuilder.
@@ -29,28 +29,40 @@ public class AkkademyDb extends AbstractActor {
                                     message.forEach(x -> {
                                         if (x instanceof SetRequest) {
                                             SetRequest setRequest = (SetRequest) x;
-                                            map.put(setRequest.key, setRequest.value);
-                                            setRequest.sender.tell(new Status.Success(setRequest.key), self());
+                                            handleSetRequest(setRequest);
+                                        }
+                                        if (x instanceof GetRequest) {
+                                            GetRequest getRequest = (GetRequest) x;
+                                            handleGetRequest(getRequest);
                                         }
                                     });
                                 }
                         ).
                         match(SetRequest.class, message -> {
-                            log.info("Received Set request: {}", message);
-                            map.put(message.key, message.value);
-                            sender().tell(new Status.Success(message.key), self());
+                            handleSetRequest(message);
                         }).
                         match(GetRequest.class, message -> {
-                            log.info("Received Get request: {}", message);
-                            Object value = map.get(message.key);
-                            Object response = (value != null)
-                                    ? value
-                                    : new Status.Failure(new KeyNotFoundException(message.key));
-                            sender().tell(response, self());
+                            handleGetRequest(message);
                         }).
-                        matchAny(o ->
-                                        sender().tell(new Status.Failure(new ClassNotFoundException()), self())
-                        ).build()
+                        matchAny(o -> {
+                            log.info("unknown message: " + o);
+                            sender().tell(new Status.Failure(new ClassNotFoundException()), self());
+                        }).build()
         );
+    }
+
+    private void handleSetRequest(SetRequest message) {
+        log.info("Received Set request: {}", message);
+        map.put(message.key, message.value);
+        message.sender.tell(new Status.Success(message.key), self());
+    }
+
+    private void handleGetRequest(GetRequest getRequest) {
+        log.info("Received Get request: {}", getRequest);
+        Object value = map.get(getRequest.key);
+        Object response = (value != null)
+                ? value
+                : new Status.Failure(new KeyNotFoundException(getRequest.key));
+        sender().tell(response, self());
     }
 }
