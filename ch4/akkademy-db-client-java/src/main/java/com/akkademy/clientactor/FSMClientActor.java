@@ -1,16 +1,13 @@
 package com.akkademy.clientactor;
 
 import akka.actor.AbstractFSM;
-import akka.actor.ActorRef;
 import akka.actor.ActorSelection;
-import akka.actor.ActorSystem;
-import akka.io.Tcp;
-import akka.japi.pf.FSMStateFunctionBuilder;
-import akka.japi.pf.ReceiveBuilder;
-import com.akkademy.messages.GetRequest;
-import com.akkademy.messages.SetRequest;
-import static com.akkademy.clientactor.State.*;
+import com.akkademy.messages.Connected;
+import com.akkademy.messages.Request;
+
 import java.util.LinkedList;
+
+import static com.akkademy.clientactor.State.*;
 
 enum State{
     DISCONNECTED,
@@ -18,28 +15,28 @@ enum State{
     CONNECTED_AND_PENDING
 }
 
-class EventQueue extends LinkedList<GetRequest> {}
-class ConnectedMsg{}
+class EventQueue extends LinkedList<Request> {}
 class FlushMsg{}
 
 public class FSMClientActor extends AbstractFSM<State, EventQueue>{
 
     private ActorSelection remoteDb;
 
-    public FSMClientActor(String remoteAddress){
-        remoteDb = context().actorSelection("akka.tcp://akkademy@" + remoteAddress + "/user/akkademy-db");
+    public FSMClientActor(String dbPath){
+        remoteDb = context().actorSelection(dbPath);
     }
 
     {
-        startWith(DISCONNECTED, null);
+        startWith(DISCONNECTED, new EventQueue());
 
         when(DISCONNECTED,
                 matchEvent(FlushMsg.class, (msg, container) -> stay())
-                        .event(GetRequest.class, (msg, container) -> {
+                        .event(Request.class, (msg, container) -> {
+                            remoteDb.tell(new Connected(), self());
                             container.add(msg);
                             return stay();
-                        }).event(Tcp.Connected.class, (msg, container) -> {
-                    if(container.getFirst() == null){
+                        }).event(Connected.class, (msg, container) -> {
+                    if(container.size() == 0){
                         return goTo(CONNECTED);
                     }else{
                         return goTo(CONNECTED_AND_PENDING);
@@ -47,8 +44,10 @@ public class FSMClientActor extends AbstractFSM<State, EventQueue>{
                 }));
 
         when(CONNECTED,
-                matchEvent(FlushMsg.class, (msg, container) -> stay())
-                        .event(GetRequest.class, (msg, container) -> {
+                matchEvent(FlushMsg.class, (msg, container) ->
+                        stay()
+                )
+                        .event(Request.class, (msg, container) -> {
                             container.add(msg);
                             return goTo(CONNECTED_AND_PENDING);
                         }));
@@ -56,10 +55,11 @@ public class FSMClientActor extends AbstractFSM<State, EventQueue>{
 
         when(CONNECTED_AND_PENDING,
                 matchEvent(FlushMsg.class, (msg, container) -> {
+                    remoteDb.tell(container, self());
                     container = new EventQueue();
-                    return stay();
+                    return goTo(CONNECTED);
                 })
-                        .event(GetRequest.class, (msg, container) -> {
+                        .event(Request.class, (msg, container) -> {
                             container.add(msg);
                             return goTo(CONNECTED_AND_PENDING);
                         }));
