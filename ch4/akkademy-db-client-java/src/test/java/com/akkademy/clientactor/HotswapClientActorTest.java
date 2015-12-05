@@ -33,7 +33,6 @@ public class HotswapClientActorTest {
 
     @Test
     public void itShouldGet() throws Exception {
-        Thread.sleep(1000);
         TestActorRef<AkkademyDb> dbRef = TestActorRef.create(system, Props.create(AkkademyDb.class));
         AkkademyDb db = dbRef.underlyingActor();
         db.map.put("testkey", "testvalue");
