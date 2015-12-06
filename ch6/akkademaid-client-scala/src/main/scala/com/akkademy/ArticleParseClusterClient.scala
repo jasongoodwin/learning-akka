@@ -1,12 +1,11 @@
 package com.akkademy
 
-import akka.actor.ActorSelection
-import akka.actor.ActorSystem
+import akka.actor.{ActorSelection, ActorSystem}
 import akka.contrib.pattern.ClusterClient
 import akka.pattern.Patterns
 import akka.util.Timeout
+
 import scala.concurrent.Await
-import scala.concurrent.Future
 import scala.concurrent.duration.Duration
 
 
