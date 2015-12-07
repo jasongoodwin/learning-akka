@@ -1,5 +1,5 @@
-CHAPTER1
-========
+CHAPTER5 - Akka Cluster Demo
+============================
 
 Inventory
 ---------
@@ -50,7 +50,7 @@ Once the service is running, you can run the appropriate client:
 
     activator run
 
-The client will send an unparsed html article to a random node. That node will parse the article and send back the response. The response will be printed. 
+The client will send an unparsed html article to a random node. That node will parse the article and send back the response. The response will be printed in the client.
 
-The service is a dynamically scalable worker queue - you can add more nodes dynamically as needed to handle as much work as you need to!
+The service is a dynamically scalable worker queue - you can add more nodes dynamically as needed to handle as much work as you need to! This is a very cool capability - to be able to scale out your projects without a lot of complexity in code is a great book.
 
