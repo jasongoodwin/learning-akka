@@ -12,6 +12,7 @@ akka-logging
 Example of akka project with logging configuration (slf4j + logback.)
 
 You can run the application like so:
+
     cd akka-logging
     activator run
 
