@@ -52,6 +52,7 @@ akka-event-bus
 Demonstrates Pub/Sub behavior with Java and Scala Akka Event Bus. Application main calls very simple code via scala (readable for java devs) invoking the scala and java versions of the event bus implementation.
 
 To run
+
     cd akka-event-bus
     activator run
 
