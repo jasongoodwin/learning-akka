@@ -1,4 +1,4 @@
-CHAPTER5 - Akka Cluster Demo
+CHAPTER6 - Akka Cluster Demo
 ============================
 
 Inventory
