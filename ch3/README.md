@@ -15,7 +15,7 @@ Prerequisites
 -------------
 Note for the java project you'll need
     "org.scala-lang.modules" %% "scala-java8-compat" % "0.6.0"
-At the time of writing it is not released - the dependency points to the SNAPSHOT which is not in maven central. Should be fixed once this is released (hopefully before publishing)
+At the time of writing it is not released - see note in the root README if you have problems running this.
 
 
 Running the Tests
