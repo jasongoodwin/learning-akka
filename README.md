@@ -31,3 +31,8 @@ and run
 
 Then the examples will work (if there is an issue).
 The library will be published by the time you read this very likely.
+
+# Up to date code
+
+If there are any errors etc, I'll fix them on github.
+The link to the code on github is: https://github.com/jasongoodwin/learning-akka/
