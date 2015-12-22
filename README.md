@@ -14,23 +14,9 @@ Any questions please feel free to either raise a github ticket or mailme at
     gmail.com
     
 # Notes at time of publishing 
-NOTE: There is a bug in the scala-java8-compat lib that is fixed in 0.6.0 which should hopefully be released around the time the book hits the press.
-0.6.0 is not released at the time the book went to printing and when the code was placed on Packt for the book.
-You should try to the examples but if you are one of the first readers then you might bump into a problem so you'd need to publish the library locally for yourself to use.
+NOTE: There is a bug in the scala-java8-compat lib that is fixed in 0.6.0. The book was published citing 0.6.0 but I think 0.6.0 as published in Maven Central has an issue with one of its dependencies that causes it to fail on import however 0.7.0 is fine to use. If anything, check maven central and use the latest.
 
-## How to locally publish the scala java8 compat library for the examples:
-checkout the library 
-
-    git clone https://github.com/scala/scala-java8-compat.git
-
-update the build.sbt to have the version 0.6.0
-
-and run 
-
-    activator publish-local
-
-Then the examples will work (if there is an issue).
-The library will be published by the time you read this very likely.
+"org.scala-lang.modules" %% "scala-java8-compat" % "0.7.0"
 
 # Up to date code
 

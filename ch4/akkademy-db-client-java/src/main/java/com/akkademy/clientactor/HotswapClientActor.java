@@ -42,7 +42,7 @@ public class HotswapClientActor extends AbstractActorWithStash {
     }
 }
 
- * /**
+ /**
  * Disconnect msg is unimplemented in this example.
  * Because we're not dealing w/ sockets directly,
  * we could instead implement an occasional ping/heartbeat that restarts
