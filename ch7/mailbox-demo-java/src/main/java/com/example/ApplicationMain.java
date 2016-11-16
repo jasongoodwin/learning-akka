@@ -34,10 +34,10 @@ public class ApplicationMain {
                             System.out.println("circuit breaker opened!");
                         }).
                         onClose(() -> {
-                            System.out.println("circuit breaker opened!");
+                            System.out.println("circuit breaker closed!");
                         }).
                         onHalfOpen(() -> {
-                            System.out.println("circuit breaker opened!");
+                            System.out.println("circuit breaker half opened!");
                         });
 
         Timeout timeout = Timeout.longToTimeout(2000L);
