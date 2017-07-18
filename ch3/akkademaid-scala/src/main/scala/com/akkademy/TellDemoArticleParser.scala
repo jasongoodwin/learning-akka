@@ -9,12 +9,12 @@ import com.akkademy.messages.{GetRequest, SetRequest}
 
 class TellDemoArticleParser(cacheActorPath: String,
                             httpClientActorPath: String,
-                            acticleParserActorPath: String,
+                            articleParserActorPath: String,
                             implicit val timeout: Timeout
                              ) extends Actor {
   val cacheActor = context.actorSelection(cacheActorPath)
   val httpClientActor = context.actorSelection(httpClientActorPath)
-  val articleParserActor = context.actorSelection(acticleParserActorPath)
+  val articleParserActor = context.actorSelection(articleParserActorPath)
 
   implicit val ec = context.dispatcher
 
@@ -28,12 +28,12 @@ class TellDemoArticleParser(cacheActorPath: String,
    */
 
   override def receive: Receive = {
-    case msg @ ParseArticle(uri) =>
+    case ParseArticle(uri) =>
 
       val extraActor = buildExtraActor(sender(), uri)
 
       cacheActor.tell(GetRequest(uri), extraActor)
-      httpClientActor.tell("test", extraActor)
+      httpClientActor.tell(uri, extraActor)
 
       context.system.scheduler.scheduleOnce(timeout.duration, extraActor, "timeout")
   }
